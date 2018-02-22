@@ -4,22 +4,21 @@
 #
 # Copyright:: 2018, The Authors, All Rights Reserved.
 
+public_profile_command = node['firewall']['publicprofile'] ? 'on' : 'off'
+private_profile_command = node['firewall']['privateprofile'] ? 'on' : 'off'
+domain_profile_command = node['firewall']['domainprofile'] ? 'on' : 'off'
 
-public_profile_command = node['firewall']['PublicProfile'] ? 'on' : 'off'
-private_profile_command = node['firewall']['PrivateProfile'] ? 'on' : 'off'
-public_profile_command = node['firewall']['DomainProfile'] ? 'on' : 'off'
-
-execute 'firewall PublicProfile' do
-  command "netsh advfirewall PublicProfile state #{public_profile_command}"
-  only_if { is_firewall_enabled('PublicProfile') != node['firewall']['PublicProfile'] }
+batch 'firewall publicprofile' do
+  code "netsh advfirewall set publicprofile state #{public_profile_command}"
+  only_if { is_firewall_enabled('publicprofile') != node['firewall']['publicprofile'] }
 end
 
-execute 'firewall PrivateProfile' do
-  command "netsh advfirewall PrivateProfile state #{private_profile_command}"
-  only_if { is_firewall_enabled('PrivateProfile') != node['firewall']['PrivateProfile'] }
+batch 'firewall privateprofile' do
+  code "netsh advfirewall set privateprofile state #{private_profile_command}"
+  only_if { is_firewall_enabled('privateprofile') != node['firewall']['privateprofile'] }
 end
 
-execute 'firewall DomainProfile' do
-  command "netsh advfirewall DomainProfile state #{domain_profile_command}"
-  only_if { is_firewall_enabled('DomainProfile') != node['firewall']['DomainProfile'] }
+batch 'firewall domainprofile' do
+  code "netsh advfirewall set domainprofile state #{domain_profile_command}"
+  only_if { is_firewall_enabled('domainprofile') != node['firewall']['domainprofile'] }
 end

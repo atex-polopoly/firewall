@@ -1,3 +1,3 @@
-default['firewall']['PublicProfile'] = true
-default['firewall']['PrivateProfile'] = true
-default['firewall']['DomainProfile'] = true
+default['firewall']['publicprofile'] = true
+default['firewall']['privateprofile'] = true
+default['firewall']['domainprofile'] = true

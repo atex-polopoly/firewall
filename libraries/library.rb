@@ -1,6 +1,5 @@
 def is_firewall_enabled(profile)
-
-  result = x%(netsh advfirewall show #{profile.downcase})
+  result = `netsh advfirewall show #{profile}`
   state = result.scan(/State\s*((?:ON)|(?:OFF))/)
-  return state == 'ON'
+  state[0][0] == 'ON'
 end
